@@ -13,20 +13,26 @@ var randComputerAnswer;
 var hiddenAnswer;
 var hiddenAnswerToDisplay;
 var guessesRemaining;
-
-//Creating a variable that is an array to store wrong Guess in
-var wrongGuess = [];
+var wrongGuess;
 
 //Creating global variables to track wins and losses
 var wins = 0;
-var losses = 0;
+winsDisplay.innerHTML = "Wins: " + wins;
 
+var losses = 0;
+lossesDisplay.innerHTML = "Losses: " + losses;
 
 //Initialize Game by calling reset game function
 resetGame();
 
 //writing function to reset game
 function resetGame() {
+    //Creating a variable that is an array to store wrong Guess in
+    wrongGuess = [];
+
+    //Need to reset wrong display
+    wrongDisplay.innerHTML = "";
+
     //this randomizes the computer answers
     randComputerAnswer = computerAnswer[Math.floor(Math.random() * computerAnswer.length)];
 
@@ -39,7 +45,7 @@ function resetGame() {
 
     //this shows the user the number of characters in the answer
     hiddenAnswer = "_ ".repeat(charComputerAnswer.length);
-
+    hiddenDisplay.innerHTML = hiddenAnswer;
     console.log(hiddenAnswer);
     console.log(hiddenAnswer.length);
     console.log("hiddenAnswer type is "+typeof hiddenAnswer);
@@ -54,6 +60,7 @@ function resetGame() {
 
     //Setting variable for guesses remaining
     guessesRemaining = 5;
+    guessesDisplay.innerHTML = "Remaining Guesses: " + guessesRemaining;
 }
 
 // This function is run whenever the user presses a key.
@@ -84,6 +91,8 @@ document.onkeyup = function(event) {
         console.log("wrong guess is " + wrongGuess);
         //displaying wrong guesses to DOM isn't working
         wrongDisplay.textContent = wrongGuess;
+        guessesRemaining--;
+        guessesDisplay.innerHTML = "Remaining Guesses: " + guessesRemaining;
     }
     console.log("hiddenAnswer to display looks like this outside the for loop " + hiddenAnswerToDisplay);
 
@@ -96,11 +105,21 @@ document.onkeyup = function(event) {
 
 
 function gameStatus() {
-    if (charComputerAnswer === hiddenAnswerToDisplay) {
+    var gameWon =  charComputerAnswer.every(function(element, index) { 
+        return element === hiddenAnswerToDisplay[index];
+    });
+
+    if (gameWon) {
         console.log("charComputerAnswer inside loop to figure out game over is " + charComputerAnswer);
         console.log("hiddenAnswerToDisplay inside loop to figure out game over " + hiddenAnswerToDisplay);
-        wins = wins++;
+        wins++;
         console.log("wins " + wins);
         winsDisplay.innerHTML = "Wins: " + wins;
+        resetGame();
+    } else if(guessesRemaining === 0){
+        losses++;
+        lossesDisplay.innerHTML = "Losses: " + losses;
+        resetGame();
     }
+
 }
