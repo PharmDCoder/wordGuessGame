@@ -41,15 +41,21 @@ document.onkeyup = function(event) {
             hiddenAnswerToDisplay.splice(index, 1, userGuess);
             //this adds the index position where condition met to variable s
             s.push(index);
+            //plays audio file "wahoo"
             playAudio("wahoo");
         }
     }
     //this if statement will run if there is nothing in the s variable ie. user did not guess correctly
     if (s.length === 0 && wrongGuess.indexOf(" " + userGuess) === -1) {
+        //adds a space and what the user pressed to wrongGuess array
         wrongGuess.push(" " + userGuess);
+       //adds wrong keys pressed to wrong guessed display on DOM
         wrongDisplay.textContent = wrongGuess;
+        //subtracts remaining guesses by one
         guessesRemaining--;
+        //changes DOM to alert user to guesses left
         guessesDisplay.innerHTML = "Remaining Guesses: " + guessesRemaining;
+        //calling function to play "doh" when guess is incorrect
         playAudio("doh");
     }
     
@@ -72,24 +78,38 @@ function gameStatus() {
         winsDisplay.innerHTML = "Wins: " + wins;
         //calling function to play winning sound clip
         playAudio("smart");
-        //calling function to reset game
-        resetGame();
-    //creating an else if statement to check to see if no guesses are left
-    } else if(guessesRemaining === 0){
+        //changes gif to Homer celebrating
+        document.getElementById("changingGif").src='assets/images/winningHomer.gif';
+        //calling function to delay game reset
+        setTimeout(function() {
+            //calling function to reset game
+            resetGame();
+        }, 6000);     
+    }
+    else if(guessesRemaining === 0){ //creating an else if statement to check to see if no guesses are left
         //adds one loss to total losses
         losses++;
         //updates loss count on Dom
         lossesDisplay.innerHTML = "Losses: " + losses;
         //calling function to play winning sound clip
         playAudio("feeling_stupid");
-        //calling function to repeat game
-        resetGame();
+        //show answer
+        hiddenDisplay.textContent = randComputerAnswer;
+        hiddenDisplay.style.color = "red";
+        //changes gif to Homer frustrated
+        document.getElementById("changingGif").src='assets/images/losingHomer.gif';
+        //calling function to delay game reset
+        setTimeout(function() {
+            //calling function to reset game
+            resetGame();
+        }, 2500);     
     }
-
 }
 
 //writing function to reset game
 function resetGame() {
+    //Change gif back
+    document.getElementById("changingGif").src='assets/images/giphy.gif';
     //Creating a variable that is an array to store wrong Guess in
     wrongGuess = [];
 
@@ -106,6 +126,9 @@ function resetGame() {
     hiddenAnswer = "_ ".repeat(charComputerAnswer.length);
     hiddenDisplay.innerHTML = hiddenAnswer;
 
+    //this initializes the color from red back to black if the last game was lost
+    hiddenDisplay.style.color = "white";
+
     //this creates a new variable to display on DOM replacing commas in array w/ spaces
     hiddenAnswerToDisplay = hiddenAnswer.split(" ");
     hiddenAnswerToDisplay.pop();
@@ -113,8 +136,8 @@ function resetGame() {
     //Setting variable for guesses remaining
     guessesRemaining = 5;
     guessesDisplay.innerHTML = "Remaining Guesses: " + guessesRemaining;
-}
 
+}
 //writing function to play audio
 function playAudio(audioID) {
     var x = document.getElementById(audioID);

@@ -9,29 +9,32 @@
     <title>Word Guessing Game: Simpsons Edition</title>
 </head>
 <body>
-    <div class="row justify-content-md-center">
-        <img class="col-6" id="game_title" src="assets/images/simpsonsTitle.PNG">
-    </div>
-    
-    <div class="row main_section justify-content-md-center">
-        <div class="card col-2 tally">
-            <div class="card-body">
-                <h1 id="wins"></h1>
+    <div class="container-fluid">
+        <div class="row justify-content-md-center">
+            <img class="col-6" src="assets/images/simpsonsTitle.PNG">
+        </div>
+        
+        <div class="row main_section justify-content-md-center">
+            <div class="card col-2 tally">
+                <div class="card-body">
+                    <h1 id="wins" class="text-success"></h1>
+                    <br>
+                    <h1 id="losses" class="text-danger"></h1>
+                    <br>
+                    <h1 id="guesses_remaining" class="text-primary"></h1>
+                </div>
+            </div>
+            <div class="jumbotron col-6 text-center game bg-primary text-warning">
+                <h1 id="hidden_answer"></h1>
                 <br>
-                <h1 id="losses"></h1>
-                <br>
-                <h1 id="guesses_remaining"></h1>
+                <h2>Wrong Guesses: </h2>
+                <h3 id="wrong_text"></h3>
+            </div>
+            <div class="col-2">
+                <img id="changingGif" class="img-responsive" src="assets/images/giphy.gif">
             </div>
         </div>
-        <div class="jumbotron col-6 text-center game">
-            <h1 id="hidden_answer"></h1>
-            <br>
-            <h2>Wrong Guesses: </h2>
-            <h3 id="wrong_text"></h3>
-        </div>
-        <img class="col-2" src="assets/images/giphy.gif">
     </div>
-
     <audio id="doh">
         <source src="assets/audioFiles/Doh 4.mp3">
     </audio>
