@@ -29,6 +29,7 @@ resetGame();
 document.onkeyup = function(event) {
     // Determines which key was pressed and assigns to userGuess.
     var userGuess = event.key;
+    if ((event.keyCode > 64 && event.keyCode < 91) || (event.keyCode > 96 && event.keyCode < 123)) {
 
     //Creating an array variable to store positions of correct guess
     var s = [];
@@ -62,6 +63,7 @@ document.onkeyup = function(event) {
     // This displays the blanks to the user and replaces comma in an array with a space
     hiddenDisplay.innerHTML = hiddenAnswerToDisplay.join(" ");
     gameStatus();
+}
 }
 
 //Writing function to check if user won or loss
